@@ -82,6 +82,7 @@ module Facebook
         # @return pass event and object of callback class to trigger function.
         #
         def receive(payload)
+          p payload
           callback = Facebook::Messenger::Incoming.parse(payload)
           event = Facebook::Messenger::Incoming::EVENTS.invert[callback.class]
           trigger(event.to_sym, callback)
@@ -95,9 +96,11 @@ module Facebook
         # @param [String] event A String describing a Messenger event.
         # @param [Object] args Arguments to pass to the hook.
         def trigger(event, *args)
+          p event
           hooks.fetch(event).call(*args)
         rescue KeyError
           warn "Ignoring #{event} (no hook registered)"
+          p "Ignoring #{event} (no hook registered)"
         end
 
         #
