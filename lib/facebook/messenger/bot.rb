@@ -28,6 +28,7 @@ module Facebook
         message_echo
         payment
         policy_enforcement
+        other
       ].freeze
 
       class << self
@@ -87,6 +88,9 @@ module Facebook
           trigger(event.to_sym, callback)
         end
 
+        def trigger_other(payload)
+          trigger(:other, payload)
+        end
         # Trigger the hook for the given event.
         # Fetch callback for event from hooks and call it.
         #
